@@ -1,6 +1,5 @@
 import React from 'react'
 import MainPage from '../../Pages/MainPage'
-
 import Header from '../Header'
 
 const Layout: React.FC = () => {

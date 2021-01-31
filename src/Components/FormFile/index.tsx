@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, createStyles, makeStyles } from '@material-ui/core'
 import { ApiFileToBase64 } from '../../Utils/ApiFile'
+import photo from '../../assets/photo.jpg'
 
 export const InputPhoto: React.FC<any> = ({ children, ...props }) => {
   return (
@@ -38,7 +39,7 @@ const useStyles = makeStyles(() =>
 const FormFile: React.FC = () => {
   const classes = useStyles()
   const [file, setFile] = React.useState<{ [key: string]: any }>({
-    idimageFile: './photo.jpg',
+    idimageFile: photo,
   })
 
   const handleSetFormFile = async (event: any) => {

@@ -10,14 +10,14 @@ import {
   ListItem,
   ListItemText,
   makeStyles,
-  TextField,
   Typography,
 } from '@material-ui/core'
 import FormFile from '../../Components/FormFile'
 import Pdf from 'react-to-pdf'
 import Footer from '../../Components/Footer'
 import Rating, { IconContainerProps } from '@material-ui/lab/Rating'
-import { initialState, reducer, ActionKind } from './reducer'
+import { initialState, reducer } from './reducer'
+import CustomDrawer from '../../Components/Drawer'
 
 const customIcons: {
   [index: number]: { icon: React.ReactElement; label: string }
@@ -81,7 +81,9 @@ const useStyles = makeStyles(() =>
     },
     buttonPdf: {
       margin: '10px auto',
-      textAlign: 'center',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   }),
 )
@@ -90,11 +92,7 @@ const MainPage: React.FC = () => {
   const classes = useStyles()
   const ref = React.createRef()
   const [value, setValue] = React.useState<number | null>(2)
-  const [state, dispatch] = React.useReducer(reducer, initialState)
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setAuth(event.target.checked);
-  // };
+  const [user, dispatch] = React.useReducer(reducer, initialState)
 
   return (
     <>
@@ -106,6 +104,7 @@ const MainPage: React.FC = () => {
             </Button>
           )}
         </Pdf>
+        <CustomDrawer user={user} dispatch={dispatch} />
       </Box>
 
       <Container className={classes.root} innerRef={ref}>
@@ -184,7 +183,7 @@ const MainPage: React.FC = () => {
                 </a>
               </Box>
             </Grid>
-            <Box>
+            <Box mt={4}>
               <Typography gutterBottom variant="h6">
                 Profile
               </Typography>
@@ -194,7 +193,7 @@ const MainPage: React.FC = () => {
                 updating my skills.
               </Typography>
             </Box>
-            <Box>
+            <Box mt={4}>
               <Typography gutterBottom variant="h6">
                 Skills:
               </Typography>
@@ -215,7 +214,7 @@ const MainPage: React.FC = () => {
                 </List>
               </Box>
             </Box>
-            <Box>
+            <Box mt={4}>
               <Typography gutterBottom variant="h6">
                 Languages:
               </Typography>
@@ -260,37 +259,10 @@ const MainPage: React.FC = () => {
           <Divider orientation="vertical" flexItem />
           <Grid item xs={6} className={classes.secondBlock}>
             <Typography gutterBottom variant="h6">
-              {`Hello! I'm ${state.name}`}
+              {`Hello! I'm ${user.name}`}
               <br />
-              {`I'm a ${state.profession}`}
+              {`I'm a ${user.profession}`}
             </Typography>
-            <TextField
-              required
-              size="small"
-              margin="dense"
-              type="text"
-              variant="outlined"
-              label="Name"
-              value={state.name}
-              onChange={e => {
-                dispatch({ type: ActionKind.setName, payload: e.target.value })
-              }}
-            />
-            <TextField
-              required
-              size="small"
-              margin="dense"
-              type="text"
-              variant="outlined"
-              label="Profession"
-              value={state.profession}
-              onChange={e => {
-                dispatch({
-                  type: ActionKind.setProfession,
-                  payload: e.target.value,
-                })
-              }}
-            />
             <Box>
               <Typography gutterBottom variant="h6">
                 Educatione
